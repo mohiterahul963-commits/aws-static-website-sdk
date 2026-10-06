@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AWS Static Website Deployment</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        nav {
+            background: #111827;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff9900;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #ff9900;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 500px;
+            background: linear-gradient(
+                135deg,
+                #0f4c81,
+                #1e88e5
+            );
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ffb300;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 28px;
+            background: #ff9900;
+            color: #111827;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background: #ffb84d;
+        }
+
+        /* Sections */
+        section {
+            padding: 70px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: #123b66;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        /* About */
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* Architecture */
+        .architecture {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .architecture-box {
+            width: 220px;
+            min-height: 170px;
+            background: white;
+            padding: 25px 15px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-top: 5px solid #1e88e5;
+        }
+
+        .architecture-box .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .architecture-box h3 {
+            color: #123b66;
+            margin-bottom: 8px;
+        }
+
+        .arrow {
+            font-size: 35px;
+            color: #1e88e5;
+        }
+
+        /* Technologies */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-card {
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tech-card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .tech-card h3 {
+            color: #123b66;
+            margin-bottom: 8px;
+        }
+
+        /* Steps */
+        .steps {
+            background: white;
+        }
+
+        .step-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+            background: #f7faff;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #1e88e5;
+        }
+
+        .step-number {
+            min-width: 50px;
+            height: 50px;
+            background: #1e88e5;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            color: #123b66;
+            margin-bottom: 5px;
+        }
+
+        /* Benefits */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .benefit {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .benefit .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .benefit h3 {
+            color: #123b66;
+            margin-bottom: 8px;
+        }
+
+        /* Demo */
+        .demo {
+            text-align: center;
+            background: #eef6ff;
+        }
+
+        #demoMessage {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #087f23;
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        footer h3 {
+            color: #ff9900;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #d1d5db;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .step {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            AWS <span>Static Website</span>
+        </div>
+
+        <div>
+            <a href="#home">Home</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#technology">Technology</a>
+            <a href="#process">Process</a>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <h1>
+                Automated Static Website
+                <span>Hosting Using AWS SDK</span>
+            </h1>
+
+            <p>
+                Deploying a static website to Amazon S3
+                automatically using Python and boto3.
+            </p>
+
+            <button class="btn" onclick="showDeploymentMessage()">
+                Test Deployment
+            </button>
+
+            <a href="#architecture" class="btn">
+                View Architecture
+            </a>
+
+            <p id="demoMessage"></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- About -->
+    <section class="about">
+
+        <div class="section-title">
+            <h2>About the Project</h2>
+            <p>Automated cloud deployment using AWS SDK</p>
+        </div>
+
+        <div class="about-content">
+
+            <p>
+                This project automates the deployment of a static
+                HTML website to Amazon S3 using Python and boto3.
+                Instead of manually uploading website files through
+                the AWS Console, a Python script performs the
+                deployment automatically.
+            </p>
+
+            <br>
+
+            <p>
+                The script can create or check an S3 bucket,
+                upload website files, configure static website
+                hosting, and provide the public website endpoint.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Architecture -->
+    <section id="architecture">
+
+        <div class="section-title">
+
+            <h2>Project Architecture</h2>
+
+            <p>
+                Local website → Python boto3 → Amazon S3 → Website
+            </p>
+
+        </div>
+
+        <div class="architecture">
+
+            <div class="architecture-box">
+
+                <div class="icon">💻</div>
+
+                <h3>Developer</h3>
+
+                <p>
+                    Local machine containing
+                    the website files.
+                </p>
+
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="architecture-box">
+
+                <div class="icon">🐍</div>
+
+                <h3>Python + boto3</h3>
+
+                <p>
+                    Automates S3 bucket creation
+                    and file upload.
+                </p>
+
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="architecture-box">
+
+                <div class="icon">🪣</div>
+
+                <h3>Amazon S3</h3>
+
+                <p>
+                    Stores website files and
+                    hosts the static website.
+                </p>
+
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="architecture-box">
+
+                <div class="icon">🌐</div>
+
+                <h3>Website Endpoint</h3>
+
+                <p>
+                    Provides the public URL
+                    for the website.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Technologies -->
+    <section id="technology">
+
+        <div class="section-title">
+
+            <h2>Technologies Used</h2>
+
+            <p>
+                Tools and services used in this project
+            </p>
+
+        </div>
+
+        <div class="tech-grid">
+
+            <div class="tech-card">
+
+                <div class="icon">🐍</div>
+
+                <h3>Python</h3>
+
+                <p>
+                    Used to automate deployment.
+                </p>
+
+            </div>
+
+
+            <div class="tech-card">
+
+                <div class="icon">☁️</div>
+
+                <h3>boto3</h3>
+
+                <p>
+                    AWS SDK for Python.
+                </p>
+
+            </div>
+
+
+            <div class="tech-card">
+
+                <div class="icon">🪣</div>
+
+                <h3>Amazon S3</h3>
+
+                <p>
+                    Stores and hosts website files.
+                </p>
+
+            </div>
+
+
+            <div class="tech-card">
+
+                <div class="icon">🔐</div>
+
+                <h3>AWS IAM</h3>
+
+                <p>
+                    Provides secure AWS permissions.
+                </p>
+
+            </div>
+
+
+            <div class="tech-card">
+
+                <div class="icon">🌐</div>
+
+                <h3>HTML</h3>
+
+                <p>
+                    Creates the website structure.
+                </p>
+
+            </div>
+
+
+            <div class="tech-card">
+
+                <div class="icon">🎨</div>
+
+                <h3>CSS</h3>
+
+                <p>
+                    Designs the website interface.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Process -->
+    <section class="steps" id="process">
+
+        <div class="section-title">
+
+            <h2>Deployment Process</h2>
+
+            <p>
+                Automated deployment workflow
+            </p>
+
+        </div>
+
+        <div class="step-container">
+
+            <div class="step">
+
+                <div class="step-number">1</div>
+
+                <div>
+
+                    <h3>Install Requirements</h3>
+
+                    <p>
+                        Install Python and boto3 on
+                        the local machine.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">2</div>
+
+                <div>
+
+                    <h3>Create or Check S3 Bucket</h3>
+
+                    <p>
+                        Python checks whether the bucket
+                        exists and creates it if required.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">3</div>
+
+                <div>
+
+                    <h3>Upload Website Files</h3>
+
+                    <p>
+                        HTML, CSS, JavaScript and other
+                        website files are uploaded automatically.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">4</div>
+
+                <div>
+
+                    <h3>Configure Static Website Hosting</h3>
+
+                    <p>
+                        S3 static website hosting is enabled
+                        and index.html is configured.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">5</div>
+
+                <div>
+
+                    <h3>Get Website Endpoint</h3>
+
+                    <p>
+                        The Python script displays the S3
+                        website URL for browser access.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Benefits -->
+    <section>
+
+        <div class="section-title">
+
+            <h2>Project Benefits</h2>
+
+            <p>
+                Why automate static website deployment?
+            </p>
+
+        </div>
+
+        <div class="benefits">
+
+            <div class="benefit">
+
+                <div class="icon">⚡</div>
+
+                <h3>Fast Deployment</h3>
+
+                <p>
+                    Deploy website files quickly
+                    using a Python script.
+                </p>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="icon">🤖</div>
+
+                <h3>Automation</h3>
+
+                <p>
+                    Reduces manual AWS Console
+                    operations.
+                </p>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="icon">☁️</div>
+
+                <h3>Cloud Hosting</h3>
+
+                <p>
+                    Website is hosted using
+                    Amazon S3.
+                </p>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="icon">🔄</div>
+
+                <h3>Easy Updates</h3>
+
+                <p>
+                    Run the script again to
+                    upload updated files.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- JavaScript Demo -->
+    <section class="demo">
+
+        <div class="section-title">
+
+            <h2>Deployment Test</h2>
+
+            <p>
+                Test the JavaScript functionality
+                of the deployed website.
+            </p>
+
+        </div>
+
+        <button class="btn" onclick="testWebsite()">
+            Run Test
+        </button>
+
+        <p id="testResult"></p>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <h3>AWS Static Website Deployment</h3>
+
+        <p>
+            Python + boto3 + Amazon S3
+        </p>
+
+        <p>
+            Automated Static Website Hosting Project
+        </p>
+
+        <br>
+
+        <p>
+            © 2026 AWS Cloud Project
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        function showDeploymentMessage() {
+
+            const message =
+                document.getElementById("demoMessage");
+
+            message.innerHTML =
+                "✅ Website is running successfully!";
+
+        }
+
+
+        function testWebsite() {
+
+            const result =
+                document.getElementById("testResult");
+
+            result.innerHTML =
+                "✅ HTML, CSS and JavaScript are working successfully!";
+
+        }
+
+    </script>
+
+</body>
+</html>
