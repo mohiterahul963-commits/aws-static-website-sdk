@@ -1,3 +1,9 @@
+<img width="1882" height="907" alt="Screenshot 2026-10-06 185032" src="https://github.com/user-attachments/assets/8297f7a0-111c-430e-be8a-c240c42f253c" />
+<img width="1887" height="911" alt="Screenshot 2026-10-06 185006" src="https://github.com/user-attachments/assets/abe128de-134d-4d9b-8de9-e0b625f3abff" />
+<img width="1892" height="916" alt="Screenshot 2026-10-06 184906" src="https://github.com/user-attachments/assets/8d7287b5-78b6-4747-8d64-f089bd6b0536" />
+
+
+
 # Automated Static Website Hosting Using AWS SDK
 
 
@@ -323,9 +329,6 @@ README.md
 deploy.py
 
 website
-<img width="1882" height="907" alt="Screenshot 2026-10-06 185032" src="https://github.com/user-attachments/assets/a5f24cc8-9386-4c59-a370-27f462732ee6" />
-<img width="1887" height="911" alt="Screenshot 2026-10-06 185006" src="https://github.com/user-attachments/assets/80ea93e1-7278-4015-bcf0-3d63fe2a5779" />
-<img width="1892" height="916" alt="Screenshot 2026-10-06 184906" src="https://github.com/user-attachments/assets/04379a15-1606-4938-8558-161106de854a" />
 
 
 
